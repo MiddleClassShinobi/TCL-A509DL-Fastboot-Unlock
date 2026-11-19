@@ -1,0 +1,47 @@
+Successful session — November 18, 2026
+Excerpt from actual console output; local paths and device serial removed.
+
+> py tcl_fastboot_probe.py COM8
+Waiting up to 45 seconds for COM8. Connect the powered-off phone.
+Opened COM8; requesting FASTBOOT once.
+Response (ASCII): b'READYTOOBTSAF'
+Response (HEX): 52 45 41 44 59 54 4f 4f 42 54 53 41 46
+Possible FASTBOOT acknowledgement. Verify with fastboot devices.
+
+> fastboot devices
+[REDACTED]         fastboot
+
+> fastboot getvar product
+product: bangkok_TF
+Finished. Total time: 0.002s
+
+> fastboot getvar unlocked
+unlocked: no
+Finished. Total time: 0.001s
+
+> fastboot flashing unlock
+(bootloader) Start unlock flow
+OKAY [  4.636s]
+Finished. Total time: 4.636s
+
+> fastboot flashing unlock
+(bootloader) Start unlock flow
+OKAY [  4.637s]
+Finished. Total time: 4.638s
+
+> fastboot getvar unlocked
+unlocked: yes
+Finished. Total time: 0.001s
+
+> fastboot reboot
+Rebooting                                          OKAY [  0.000s]
+Finished. Total time: 0.001s
+
+> adb shell getprop ro.boot.flash.locked
+0
+
+> adb shell getprop ro.boot.vbmeta.device_state
+unlocked
+
+> adb shell getprop ro.boot.verifiedbootstate
+orange
